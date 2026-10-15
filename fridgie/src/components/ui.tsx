@@ -72,6 +72,7 @@ const NAV = [
   { to: '/recipes', label: 'Recetas', icon: IconRecipe },
   { to: '/pantry', label: 'Despensa', icon: IconPantry },
   { to: '/lists', label: 'Listas', icon: IconList },
+  { to: '/scan', label: 'Escanear', icon: IconScan },
   { to: '/download', label: 'Descargar', icon: IconDownload },
   { to: '/settings', label: 'Ajustes', icon: IconGear },
 ];
@@ -118,6 +119,7 @@ function IconRecipe() { return <svg {...base}><path d="M4 5a2 2 0 012-2h13v18H6a
 function IconPantry() { return <svg {...base}><rect x="4" y="3" width="16" height="18" rx="2" /><path d="M4 12h16M15 7v2M15 15v2" /></svg>; }
 function IconList() { return <svg {...base}><path d="M9 6h11M9 12h11M9 18h11" /><path d="M4 6l1.5 1.5L8 5M4 12l1.5 1.5L8 11M4 18l1.5 1.5L8 17" /></svg>; }
 function IconDownload() { return <svg {...base}><path d="M12 3v12" /><path d="M7 10l5 5 5-5" /><path d="M4 21h16" /></svg>; }
+function IconScan() { return <svg {...base}><path d="M4 8V5a1 1 0 011-1h3M16 4h3a1 1 0 011 1v3M20 16v3a1 1 0 01-1 1h-3M8 20H5a1 1 0 01-1-1v-3" /><path d="M4 12h16" /></svg>; }
 function IconGear() { return <svg {...base}><circle cx="12" cy="12" r="3.2" /><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1" /></svg>; }
 
 export function Card({ children, title }: { children: ReactNode; title?: string }) {

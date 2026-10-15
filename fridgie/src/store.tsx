@@ -8,7 +8,7 @@ import {
 import type {
   Ingredient, Recipe, ShoppingList, ListItem, Preferences, SyncState, ConflictInfo, Session,
 } from './core/types';
-import { STORES, getAllActive, putEntity, getMeta, setMeta, countPending } from './core/storage';
+import { STORES, getAllActive, bulkPut, putEntity, getMeta, setMeta, countPending } from './core/storage';
 import { SEED_RECIPES } from './core/recipes/catalog';
 import { runSyncCycle, resolveConflict as resolveConflictCore, type SyncTransport } from './core/sync/engine';
 import { createDemoTransport } from './services/demoTransport';
@@ -66,6 +66,9 @@ export interface Store extends AppState {
   saveList: (l: ShoppingList) => Promise<void>;
   saveItem: (it: ListItem) => Promise<void>;
   savePrefs: (p: Preferences) => Promise<void>;
+  /** Persiste un lote de entidades en IndexedDB y refresca la UI de una vez
+   *  (usado por la importación de tickets: no se pierde nada si luego cae la red). */
+  saveMany: (args: { ingredients?: Ingredient[]; lists?: ShoppingList[]; items?: ListItem[] }) => Promise<void>;
   syncNow: () => Promise<void>;
   resolveConflict: (c: ConflictInfo, choice: 'local' | 'remote') => Promise<void>;
 }
@@ -198,6 +201,18 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     saveList: (l) => persistAndDispatch(STORES.lists, l, { type: 'lists', payload: upsert(state.lists, l) }),
     saveItem: (it) => persistAndDispatch(STORES.listItems, it, { type: 'items', payload: upsert(state.items, it) }),
     savePrefs: (p) => persistAndDispatch(STORES.preferences, p, { type: 'prefs', payload: p }),
+    saveMany: async ({ ingredients = [], lists = [], items = [] }) => {
+      await Promise.all([
+        ingredients.length ? bulkPut(STORES.ingredients, ingredients) : Promise.resolve(),
+        lists.length ? bulkPut(STORES.lists, lists) : Promise.resolve(),
+        items.length ? bulkPut(STORES.listItems, items) : Promise.resolve(),
+      ]);
+      if (ingredients.length) dispatch({ type: 'ingredients', payload: mergeAll(stateRef.current.ingredients, ingredients) });
+      if (lists.length) dispatch({ type: 'lists', payload: [...stateRef.current.lists, ...lists] });
+      if (items.length) dispatch({ type: 'items', payload: [...stateRef.current.items, ...items] });
+      const pendingCount = await countPending();
+      setSync((prev) => ({ ...prev, pendingCount }));
+    },
     syncNow,
     resolveConflict,
   }), [state, online, sync, cloudMode, refresh, persistAndDispatch, syncNow, resolveConflict]);
@@ -211,6 +226,13 @@ function upsert<T extends { id: string }>(arr: T[], item: T): T[] {
   const copy = [...arr];
   copy[i] = item;
   return copy;
+}
+
+/** Sustituye/inserta en bloque preservando el resto del array. */
+function mergeAll<T extends { id: string }>(arr: T[], items: T[]): T[] {
+  const map = new Map(arr.map((x) => [x.id, x]));
+  for (const it of items) map.set(it.id, it);
+  return [...map.values()];
 }
 
 export function useStore(): Store {

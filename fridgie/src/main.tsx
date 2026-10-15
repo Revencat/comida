@@ -10,6 +10,7 @@ import RecipeDetailPage from './pages/RecipeDetailPage';
 import PantryPage from './pages/PantryPage';
 import ListsPage from './pages/ListsPage';
 import DownloadPage from './pages/DownloadPage';
+import ScanReceiptPage from './pages/ScanReceiptPage';
 import SettingsPage from './pages/SettingsPage';
 import { registerServiceWorker } from './platform/pwa';
 import './styles/global.css';
@@ -26,6 +27,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
             <Route path="recipes/:id" element={<RecipeDetailPage />} />
             <Route path="pantry" element={<PantryPage />} />
             <Route path="lists" element={<ListsPage />} />
+            <Route path="scan" element={<ScanReceiptPage />} />
             <Route path="download" element={<DownloadPage />} />
             <Route path="settings" element={<SettingsPage />} />
             <Route path="*" element={<HomePage />} />
