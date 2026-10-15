@@ -25,6 +25,7 @@ export interface Recipe {
   servings: number;
   tags: string[];
   favorite: boolean;
+  imageEmoji?: string;       // símbolo simple mientras no haya foto
   updatedAt: number;
   deleted?: boolean;
   syncStatus: SyncStatus;

@@ -27,7 +27,7 @@ export const SEED_RECIPES: Recipe[] = [
       'Batir los huevos con sal y mezclar con la patata templada.',
       'Cuajar 3-4 min por lado en una sartén antiadherente.',
     ],
-    servings: 4, tags: ['española', 'vegetariano', 'básico'], favorite: true,
+    servings: 4, tags: ['española', 'vegetariano', 'básico'], favorite: true, imageEmoji: '🍳',
   }),
   r({
     title: 'Pasta al ajo y aceite',
@@ -43,7 +43,7 @@ export const SEED_RECIPES: Recipe[] = [
       'Dorar el ajo laminado en aceite a fuego bajo.',
       'Mezclar la pasta con el aceite emulsionado y un poco del agua de cocción.',
     ],
-    servings: 2, tags: ['italiana', 'rápida', 'vegetariano'], favorite: false,
+    servings: 2, tags: ['italiana', 'rápida', 'vegetariano'], favorite: false, imageEmoji: '🍝',
   }),
   r({
     title: 'Crema de calabacín',
@@ -60,7 +60,7 @@ export const SEED_RECIPES: Recipe[] = [
       'Añadir el caldo y cocer 20 minutos.',
       'Triturar hasta conseguir una crema fina y rectificar de sal.',
     ],
-    servings: 4, tags: ['vegetariana', 'sopa', 'saludable'], favorite: false,
+    servings: 4, tags: ['vegetariana', 'sopa', 'saludable'], favorite: false, imageEmoji: '🥒',
   }),
   r({
     title: 'Smoothie verde Broc',
@@ -72,7 +72,7 @@ export const SEED_RECIPES: Recipe[] = [
       { name: 'leche', quantity: 100, unit: 'ml' },
     ],
     steps: ['Triturar todo 40 segundos hasta que quede homogéneo.', 'Servir muy frío.'],
-    servings: 1, tags: ['desayuno', 'smoothie', 'vegano-opcional'], favorite: true,
+    servings: 1, tags: ['desayuno', 'smoothie', 'vegano-opcional'], favorite: true, imageEmoji: '🥤',
   }),
   r({
     title: 'Arroz salteado de aprovechamiento',
@@ -89,7 +89,7 @@ export const SEED_RECIPES: Recipe[] = [
       'Añadir el arroz y desmenuzarlo bien.',
       'Incorporar el huevo batido removiendo rápido y aliñar con soja.',
     ],
-    servings: 2, tags: ['aprovechamiento', 'rápida', 'asiática'], favorite: false,
+    servings: 2, tags: ['aprovechamiento', 'rápida', 'asiática'], favorite: false, imageEmoji: '🍚',
   }),
   r({
     title: 'Tostada de tomate y aguacate',
@@ -104,6 +104,6 @@ export const SEED_RECIPES: Recipe[] = [
       'Tostar el pan y frotarlo con el tomate cortado.',
       'Machacar el aguacate por encima con sal y AOVE.',
     ],
-    servings: 2, tags: ['brunch', 'vegetariana', 'rápida'], favorite: false,
+    servings: 2, tags: ['brunch', 'vegetariana', 'rápida'], favorite: false, imageEmoji: '🥑',
   }),
 ];
