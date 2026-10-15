@@ -3,9 +3,26 @@ import { useEffect, useState, type ReactNode } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import { useStore } from '../store';
 import { platform } from '../platform/capabilities';
-import { FridgieMark } from '../brand/broc';
 
-export { Broc } from '../brand/broc';
+export function Broc({ size = 44 }: { size?: number }) {
+  // Broc — mascota vectorial (brócoli adorable). Sin emoji como recurso.
+  return (
+    <svg width={size} height={size} viewBox="0 0 64 64" role="img" aria-label="Broc, la mascota de FRIDGIE">
+      <rect width="64" height="64" rx="14" fill="#f4fbf6" />
+      <path d="M26 44c0 6 2 9 6 9s6-3 6-9v-6H26v6Z" fill="#8fdcb0" stroke="#1b7a43" strokeWidth="2" />
+      <circle cx="24" cy="26" r="10" fill="#2fa860" />
+      <circle cx="40" cy="26" r="10" fill="#2fa860" />
+      <circle cx="32" cy="18" r="10" fill="#37b56b" />
+      <circle cx="28" cy="27" r="2.4" fill="#fff" />
+      <circle cx="38" cy="27" r="2.4" fill="#fff" />
+      <circle cx="28.6" cy="27.6" r="1.1" fill="#1c2b23" />
+      <circle cx="38.6" cy="27.6" r="1.1" fill="#1c2b23" />
+      <path d="M30 33q3 3 6 0" stroke="#1c2b23" strokeWidth="1.8" fill="none" strokeLinecap="round" />
+      <circle cx="22" cy="32" r="2.2" fill="#ffd1dc" opacity=".8" />
+      <circle cx="44" cy="32" r="2.2" fill="#ffd1dc" opacity=".8" />
+    </svg>
+  );
+}
 
 export function ToastHost() {
   const [msg, setMsg] = useState<string | null>(null);
@@ -28,7 +45,7 @@ export function StatusBanners() {
     <>
       {!online && (
         <div className="offline-banner" role="status">
-          <span className="sig" aria-hidden><i /><i /><i /></span>
+          <span aria-hidden>📶</span>
           Sin conexión — puedes consultar recetas guardadas, tu despensa sincronizada y editar tus listas.
           Los cambios se guardan localmente y se sincronizarán automáticamente al volver la conexión.
           La IA y el inicio de sesión no están disponibles ahora.
@@ -80,12 +97,9 @@ export function Layout() {
   const { online } = useStore();
   return (
     <div className="app-shell">
-      <div className="bg-blobs" aria-hidden>
-        <i className="blob b1" /><i className="blob b2" /><i className="blob b3" />
-      </div>
       <header className="topbar">
         <div className="topbar-inner">
-          <NavLink to="/" className="brand"><FridgieMark size={34} /> FRIDGIE</NavLink>
+          <NavLink to="/" className="brand"><img src="/icons/icon-192.png" alt="" width={34} height={34} /> FRIDGIE</NavLink>
           <nav className="nav" aria-label="Principal">
             {NAV.map((n) => <NavLink key={n.to} to={n.to} className={({ isActive }) => (isActive ? 'active' : '')}>{n.label}</NavLink>)}
           </nav>
@@ -98,7 +112,7 @@ export function Layout() {
         <StatusBanners />
         <Outlet />
       </main>
-      <footer className="footer-links">FRIDGIE v{__FRIDGIE_VERSION__} · hecha con <svg width="13" height="12" viewBox="0 0 12 11" style={{ verticalAlign: '-1px' }} aria-hidden><path d="M6 10.5C2 7.5.5 5.4.5 3.4 1.8 1.2 4.4 1 6 3c1.6-2 4.2-1.8 5.5 0C11.5 5.4 10 7.5 6 10.5Z" fill="#2fa860"/></svg> para cocinas reales</footer>
+      <footer className="footer-links">FRIDGIE v{__FRIDGIE_VERSION__} · hecha con 💚 para cocinas reales</footer>
       <nav className="tabbar" aria-label="Navegación móvil">
         {NAV.map((n) => (
           <NavLink key={n.to} to={n.to} className={({ isActive }) => (isActive ? 'active' : '')}>
