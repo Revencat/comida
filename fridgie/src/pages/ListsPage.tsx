@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { useStore } from '../store';
 import { Card } from '../components/ui';
+import { Broc, FoodIcon, foodFor } from '../brand/broc';
 import { addItem, toggleChecked, removeItem, progress, createList } from '../core/lists/manager';
 
 export default function ListsPage() {
@@ -39,8 +40,13 @@ export default function ListsPage() {
 
   return (
     <>
-      <h1>Listas de la compra</h1>
-      <p className="subtitle">Edita y marca comprados sin conexión. Todo se guarda en tu dispositivo y se sincroniza al reconectar.</p>
+      <div className="page-head">
+        <div>
+          <h1>Listas de la compra</h1>
+          <p className="subtitle">Edita y marca comprados sin conexión. Todo se guarda en tu dispositivo y se sincroniza al reconectar.</p>
+        </div>
+        <Broc size={54} variant="cart" title="Broc con el carrito" />
+      </div>
       <div className="row" style={{ marginBottom: '1rem' }}>
         {s.lists.map((l) => (
           <button key={l.id} className={`btn ${l.id === listId ? 'btn-primary' : 'btn-ghost'}`} onClick={() => setActiveId(l.id)}>
@@ -66,12 +72,13 @@ export default function ListsPage() {
             {items.map((i) => (
               <div key={i.id} className={`check-item ${i.checked ? 'done' : ''}`}>
                 <input type="checkbox" checked={i.checked} onChange={() => onToggle(i.id)} aria-label={`Marcar ${i.name}`} />
+                <FoodIcon food={foodFor(i.name)} size={22} />
                 <span style={{ flex: 1 }}>{i.name} <span className="muted">· {i.quantity} {i.unit}</span></span>
                 {i.syncStatus !== 'synced' && <span className="pill pill-amber" title="Pendiente de sincronizar">↻</span>}
-                <button className="btn btn-ghost" onClick={() => onRemove(i.id)} aria-label={`Quitar ${i.name}`}>×</button>
+                <button className="btn btn-ghost tiny" onClick={() => onRemove(i.id)} aria-label={`Quitar ${i.name}`}>×</button>
               </div>
             ))}
-            {items.length === 0 && <p className="muted">Lista vacía. ¡Añade lo primero! 🧺</p>}
+            {items.length === 0 && <p className="muted">Lista vacía. ¡Añade lo primero!</p>}
           </div>
         </Card>
       )}

@@ -1,55 +1,52 @@
-// ─── Página: Inicio ─────────────────────────────────────────────────────────
+// ─── Página: Inicio — panel de widgets vivos de FRIDGIE ─────────────────────
+import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { useStore } from '../store';
-import { Broc, Card } from '../components/ui';
-import { cookableNow } from '../core/recipes/engine';
-import { expiringSoon } from '../core/ingredients/manager';
-import { progress } from '../core/lists/manager';
+import { WidgetsArea } from '../components/widgets';
+import { FoodIcon, foodFor, tileStyle } from '../brand/broc';
+import { searchRecipes } from '../core/recipes/engine';
+import { useInstall } from '../hooks/useInstall';
 
 export default function HomePage() {
   const s = useStore();
-  if (!s.loaded) return <p className="muted">Cargando tu cocina…</p>;
+  const install = useInstall();
+  // Recetas "para explorar": rotación determinista según la hora → la web varía
+  const hourSeed = Math.floor(Date.now() / 3_600_000);
+  const explore = useMemo(() => {
+    const all = searchRecipes(s.recipes, '');
+    if (all.length === 0) return [];
+    const start = hourSeed % all.length;
+    return [...all.slice(start), ...all.slice(0, start)].slice(0, 4);
+  }, [s.recipes, hourSeed]);
 
-  const cookable = cookableNow(s.recipes, s.ingredients);
-  const soon = expiringSoon(s.ingredients, 5);
-  const mainList = s.lists[0];
-  const prog = mainList ? progress(s.items, mainList.id) : { done: 0, total: 0 };
+  if (!s.loaded) {
+    return (
+      <div className="loading-stage">
+        <span className="loader-broc" aria-hidden />
+        <p className="muted">Abriendo la nevera…</p>
+      </div>
+    );
+  }
 
   return (
     <>
-      <div className="row spread">
-        <div>
-          <h1>Hola, soy Broc 🥦</h1>
-          <p className="subtitle">Tu cocina, siempre a mano. Esto es lo que tienes ahora mismo:</p>
+      <WidgetsArea installProps={{ canNativeInstall: install.canNativeInstall, isInstalled: install.isInstalled, install: () => void install.install() }} />
+
+      <section className="strip">
+        <h2>Para explorar <span className="muted rotate-note">— cambia cada hora con lo que tienes</span></h2>
+        <div className="recipe-strip">
+          {explore.map((r) => (
+            <Link key={r.id} to={`/recipes/${r.id}`} className="mini-card">
+              <span className="tile" style={tileStyle(r.id + r.title)}>
+                <FoodIcon food={foodFor(r.ingredients[0]?.name ?? r.title)} size={28} />
+              </span>
+              <b>{r.title}</b>
+              <span className="muted">{r.tags[0] ?? 'receta'}</span>
+            </Link>
+          ))}
         </div>
-        <Broc size={72} />
-      </div>
-      <div className="grid cols-3">
-        <Card title="Puedes cocinar ya">
-          <p style={{ fontSize: '2rem', margin: 0, fontWeight: 800, color: 'var(--green-700)' }}>{cookable.length}</p>
-          <p className="muted">recetas completas con tu despensa actual.</p>
-          {cookable[0] && <Link to={`/recipes/${cookable[0].id}`}>Empezar por «{cookable[0].title}» →</Link>}
-        </Card>
-        <Card title="Caduca pronto">
-          <p style={{ fontSize: '2rem', margin: 0, fontWeight: 800, color: soon.length ? '#9a6b00' : 'var(--green-700)' }}>{soon.length}</p>
-          <p className="muted">{soon.length ? soon.slice(0, 3).map((i) => i.name).join(', ') : 'todo fresco por ahora.'}</p>
-          <Link to="/pantry">Revisar despensa →</Link>
-        </Card>
-        <Card title="Compra semanal">
-          <div className="progress" aria-hidden><i style={{ width: `${prog.total ? (prog.done / prog.total) * 100 : 0}%` }} /></div>
-          <p className="muted">{prog.done}/{prog.total} productos comprados.</p>
-          <Link to="/lists">Ir a las listas →</Link>
-        </Card>
-      </div>
-      <h2>Sugerencias con lo que tienes</h2>
-      <div className="grid cols-2">
-        {s.recipes.slice(0, 4).map((r) => (
-          <Link key={r.id} to={`/recipes/${r.id}`} className="card row" style={{ gap: '1rem' }}>
-            <span style={{ fontSize: '1.8rem' }} aria-hidden>{r.imageEmoji}</span>
-            <span><b>{r.title}</b><br /><span className="muted">{r.description}</span></span>
-          </Link>
-        ))}
-      </div>
+        <Link to="/recipes" className="btn btn-ghost see-all">Ver todas las recetas →</Link>
+      </section>
     </>
   );
 }
