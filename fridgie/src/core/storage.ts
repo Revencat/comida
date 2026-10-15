@@ -37,11 +37,11 @@ export function getDb(): Promise<IDBPDatabase> {
 }
 
 type EntityMap = {
-  [STORES.ingredients]: Ingredient;
-  [STORES.recipes]: Recipe;
-  [STORES.lists]: ShoppingList;
-  [STORES.listItems]: ListItem;
-  [STORES.preferences]: Preferences;
+  ingredients: Ingredient;
+  recipes: Recipe;
+  lists: ShoppingList;
+  listItems: ListItem;
+  preferences: Preferences;
 };
 
 export async function putEntity<K extends keyof EntityMap>(
@@ -71,7 +71,8 @@ export async function getById<K extends keyof EntityMap>(
   store: K, id: string,
 ): Promise<EntityMap[K] | undefined> {
   const db = await getDb();
-  return db.get(store, id) as Promise<EntityMap[K] | undefined;
+  const value = await db.get(store, id);
+  return value as EntityMap[K] | undefined;
 }
 
 export async function deleteEntity(

@@ -128,7 +128,8 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     ]);
     const prefs = prefsRaw[0] ?? defaultPrefs;
     dispatch({ type: 'loaded', payload: { ingredients, recipes, lists, items, prefs, session: stateRef.current.session } });
-    setSync((prev) => ({ ...prev, lastSyncAt: lastSyncAt ?? null, pendingCount: await countPending() }));
+    const pendingCount = await countPending();
+    setSync((prev) => ({ ...prev, lastSyncAt: lastSyncAt ?? null, pendingCount }));
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -136,8 +137,8 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const persistAndDispatch = useCallback(async (store: string, value: object, action: Action) => {
     await putEntity(store as never, value as never);
     dispatch(action);
-    setSync((prev) => ({ ...prev, pendingCount: prev.pendingCount + 1 }));
-    setSync((prev) => ({ ...prev, pendingCount: await countPending() }));
+    const pendingCount = await countPending();
+    setSync((prev) => ({ ...prev, pendingCount }));
   }, []);
 
   const syncNow = useCallback(async () => {
