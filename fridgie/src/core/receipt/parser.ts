@@ -29,13 +29,13 @@ const uid = (s: string) => {
 // Palabras que NUNCA son productos (metadatos del ticket)
 const META_WORDS = /\b(total|subtotal|iva|igic|impto|impuesto|ticket|factura|recibo|caja|fecha|hora|tlf|telefono|tel\.?|nif|cif|dni|base|descuento|cambio|vuelto|effectivo|efectivo|tarjeta|cbtu|importe|bruto|neto|doc\W|num\W|no\.?\W|serie|pvp|gracias|visit|sede)\b/i;
 const NOISE_ONLY = /^[\s.,:;|_=\-*·•#ºª°©®!¿?¡/\\()[\]{}<>+~^`'"$€£%&@0-9\t]*$/;
-const PRICE_ONLY = /^\s*[{[(]?\s*-?\d+[.,]\d{0,2}\s*[}])?\s*(€|eur)?\s*$/i;
+const PRICE_ONLY = /^\s*[{[(]?\s*-?\d+[.,]\d{0,2}\s*[})\]]?\s*(€|eur)?\s*$/i;
 
 /** ¿Es una cabecera de tienda? (línea alfabética corta sin números) */
 function looksLikeStore(line: string): boolean {
   if (META_WORDS.test(line)) return false;
   const words = line.replace(/[^a-záéíóúñü\s]/gi, '').trim().split(/\s+/).filter((w) => w.length > 2);
-  return words.length >= 1 && /^[A-Za-zÁÉÍÓÚÑÜá-zà-ú\s.&'-]+$/.test(line.trim()) && line.trim().length <= 40;
+  return words.length >= 1 && /^[A-Za-zÁÉÍÓÚÑÜáéíóúñü\s.&'-]+$/.test(line.trim()) && line.trim().length <= 40;
 }
 
 /** Extrae cantidad + unidad + precio de una línea tipo "ACEITE OLI 1,5 L 5,99" */
@@ -92,7 +92,7 @@ function cleanName(raw: string, rest: string): string {
 function splitOcrLines(text: string): string[] {
   let src = text.replace(/\r\n?/g, '\n');
   if (src.split('\n').length <= 2 && (src.match(/\d+[.,]\d{2}/g) ?? []).length >= 3) {
-    src = src.replace(/(\d+[.,]\d{2})\s*(€)?\s+(?=[A-Za-zÁÉÍÓÚÑÜá-zà-ú])/g, '$1$2\n');
+    src = src.replace(/(\d+[.,]\d{2})\s*(€)?\s+(?=[A-Za-zÁÉÍÓÚÑÜáéíóúñü])/g, '$1$2\n');
   }
   return src.split('\n').map((l) => l.trim()).filter((l) => l.length > 0);
 }
