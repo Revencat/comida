@@ -49,6 +49,17 @@ export default function RecipeDetailPage() {
           <ol>{recipe.steps.map((st, i) => <li key={i} style={{ marginBottom: '.5rem' }}>{st}</li>)}</ol>
         </Card>
       </div>
+      <div style={{ marginTop: '1rem' }}>
+        <Card title="Cómo se hace: vídeos y webs">
+          <div className="row">
+            <a className="btn btn-primary" target="_blank" rel="noopener noreferrer"
+              href={`https://www.youtube.com/results?search_query=${encodeURIComponent('receta ' + recipe.title)}`}>Ver vídeos en YouTube</a>
+            <a className="btn btn-secondary" target="_blank" rel="noopener noreferrer"
+              href={`https://www.google.com/search?q=${encodeURIComponent('receta ' + recipe.title)}`}>Buscar webs de recetas</a>
+          </div>
+          <p className="muted" style={{ marginBottom: 0 }}>Se abren en una pestaña nueva con resultados de «{recipe.title}». Necesitan conexión.</p>
+        </Card>
+      </div>
       <div className="row" style={{ marginTop: '1rem' }}>
         <Link className="btn btn-ghost" to="/recipes">← Todas las recetas</Link>
         <span className="pill pill-gray">Disponible sin conexión · guardada en tu dispositivo</span>

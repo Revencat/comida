@@ -198,3 +198,31 @@ h1, h2 { font-weight: 900; }
 .broc { flex: none; filter: drop-shadow(0 8px 14px rgba(31,107,59,.22)); transform-origin: 50% 90%; animation: broc-hello 1.1s ease .3s 1 both; }
 @keyframes broc-hello { 0% { transform: rotate(0); } 30% { transform: rotate(-9deg); } 60% { transform: rotate(7deg); } 100% { transform: rotate(0); } }
 @media (prefers-reduced-motion: reduce) { .broc { animation: none; } }
+
+/* ═══ Modo oscuro (se activa con data-theme="dark" en <html>) ═══ */
+.theme-toggle { background: transparent; border: 2px solid var(--line); border-radius: 999px; width: 38px; height: 38px; display: grid; place-items: center; color: var(--ink-soft); flex: none; }
+.theme-toggle svg { width: 20px; height: 20px; }
+@media (max-width: 720px) { .theme-toggle { margin-left: auto; } }
+[data-theme="dark"] {
+  color-scheme: dark;
+  --green-700: #a6e585; --green-500: #3fa34d; --green-300: #57b36a; --green-100: #25402d; --green-50: #1b2d22;
+  --ink: #eef5ee; --ink-soft: #a9bbae; --white: #1d2b23; --paper: #121c17; --line: #2e4437;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.4); --shadow-md: 0 8px 24px rgba(0,0,0,.5);
+}
+[data-theme="dark"] body { background: radial-gradient(900px 420px at 90% -10%, #2c3a18 0%, transparent 60%), var(--paper); }
+[data-theme="dark"] .topbar { background: rgba(18,28,23,.88); }
+[data-theme="dark"] .tabbar { background: rgba(18,28,23,.96); }
+[data-theme="dark"] input, [data-theme="dark"] select, [data-theme="dark"] textarea { background: #16231c; color: var(--ink); }
+[data-theme="dark"] .btn-primary { box-shadow: 0 4px 0 #1f6b3b; }
+[data-theme="dark"] .btn-primary:active { box-shadow: 0 1px 0 #1f6b3b; }
+[data-theme="dark"] .btn-secondary { box-shadow: 0 3px 0 #17291e; }
+[data-theme="dark"] .toast { background: #2e4437; }
+[data-theme="dark"] .receipt-drop { background: linear-gradient(180deg, #1d2b23, #18251e); }
+[data-theme="dark"] .receipt-lines li { background: var(--white); }
+[data-theme="dark"] .ocr-progress { background: #25402d; }
+[data-theme="dark"] .ocr-progress span { color: #fff; }
+[data-theme="dark"] .pill-gray { background: #2a3b31; color: var(--ink-soft); }
+[data-theme="dark"] .pill-amber { background: #4a3a12; color: #f4c867; }
+[data-theme="dark"] .pill-red { background: #4a2222; color: #f19a9a; }
+[data-theme="dark"] .offline-banner { background: #3a3114; border-color: #5a4a1c; color: #f4d98a; }
+[data-theme="dark"] .sync-banner { background: var(--green-50); border-color: var(--green-300); color: var(--green-700); }

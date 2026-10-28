@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useStore } from '../store';
 import { Broc, FoodIcon, foodFor } from '../brand/broc';
 import { parseReceiptText, type ReceiptLine } from '../core/receipt/parser';
+import { SAMPLE_TICKETS } from '../core/receipt/samples';
 import { matchReceiptLine, type MatchKind } from '../core/receipt/matcher';
 import { applyLinesToPantry, buildPurchaseList } from '../core/receipt/apply';
 import { recognizeReceiptImage, OcrUnavailableError } from '../services/ocr';
@@ -166,6 +167,12 @@ export default function ScanReceiptPage() {
             📸 Subir foto del ticket
           </button>
           <span className="muted">o arrástrala aquí · JPG, PNG o archivo de texto</span>
+          <div className="row" style={{ justifyContent: 'center' }}>
+            <span className="muted">¿Quieres probarla? Usa un ticket de ejemplo:</span>
+            {SAMPLE_TICKETS.map((t) => (
+              <button key={t.id} className="btn btn-secondary" onClick={() => { setRawText(t.text); void analyzeText(t.text, 'text'); }}>{t.label}</button>
+            ))}
+          </div>
           {previewUrl && <img src={previewUrl} alt="Vista previa del ticket" className="receipt-preview" />}
           {ocrPct != null && (
             <div className="ocr-progress" role="progressbar" aria-valuenow={ocrPct} aria-valuemin={0} aria-valuemax={100}>
@@ -173,7 +180,7 @@ export default function ScanReceiptPage() {
             </div>
           )}
           <details className="paste-box">
-            <summary>¿Sin foto? Pega el texto del ticket</summary>
+            <summary>¿Tienes tu propio ticket? Pega aquí su texto</summary>
             <textarea rows={7} value={rawText} placeholder={'MERCA-DONA MADRID\nTomate rama 1,20\nLeche semi 1L 1,05\nHUEVOS L 12 ud 2,15\nTOTAL 18,40 €'} onChange={(e) => setRawText(e.target.value)} />
             <button className="btn btn-secondary" onClick={() => void analyzeText(rawText, 'text')}>Analizar texto</button>
           </details>

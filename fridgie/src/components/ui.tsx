@@ -86,6 +86,7 @@ export function Layout() {
           <nav className="nav" aria-label="Principal">
             {NAV.map((n) => <NavLink key={n.to} to={n.to} className={({ isActive }) => (isActive ? 'active' : '')}>{n.label}</NavLink>)}
           </nav>
+          <ThemeToggle />
           <span className={`pill ${online ? 'pill-green' : 'pill-amber'}`} title={online ? 'Conectado' : 'Sin conexión'}>
             {online ? '● En línea' : '○ Offline'}
           </span>
@@ -117,6 +118,25 @@ function IconList() { return <svg {...base}><path d="M9 6h11M9 12h11M9 18h11" />
 function IconDownload() { return <svg {...base}><path d="M12 3v12" /><path d="M7 10l5 5 5-5" /><path d="M4 21h16" /></svg>; }
 function IconScan() { return <svg {...base}><path d="M4 8V5a1 1 0 011-1h3M16 4h3a1 1 0 011 1v3M20 16v3a1 1 0 01-1 1h-3M8 20H5a1 1 0 01-1-1v-3" /><path d="M4 12h16" /></svg>; }
 function IconGear() { return <svg {...base}><circle cx="12" cy="12" r="3.2" /><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1" /></svg>; }
+
+function ThemeToggle() {
+  const [dark, setDark] = useState(() => document.documentElement.dataset.theme === 'dark');
+  function toggle() {
+    const next = dark ? 'light' : 'dark';
+    document.documentElement.dataset.theme = next;
+    try { localStorage.setItem('fridgie-theme', next); } catch { /* sin almacenamiento: vale solo esta sesión */ }
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', next === 'dark' ? '#121c17' : '#3fa34d');
+    setDark(!dark);
+  }
+  const label = dark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro';
+  return (
+    <button className="theme-toggle" onClick={toggle} aria-label={label} title={label}>
+      {dark
+        ? <svg {...base}><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" /></svg>
+        : <svg {...base}><path d="M20 14.5A8 8 0 019.5 4a8 8 0 1010.5 10.5Z" /></svg>}
+    </button>
+  );
+}
 
 export function Card({ children, title }: { children: ReactNode; title?: string }) {
   return <section className="card">{title && <h2 style={{ marginTop: 0 }}>{title}</h2>}{children}</section>;
