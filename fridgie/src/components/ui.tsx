@@ -5,22 +5,52 @@ import { useStore } from '../store';
 import { platform } from '../platform/capabilities';
 
 export function Broc({ size = 44 }: { size?: number }) {
-  // Broc — mascota vectorial (brócoli adorable). Sin emoji como recurso.
+  // Broc — mascota de Fridgie: brócoli sonriente con ojos grandes.
   return (
-    <svg width={size} height={size} viewBox="0 0 64 64" role="img" aria-label="Broc, la mascota de FRIDGIE">
-      <rect width="64" height="64" rx="14" fill="#f4fbf6" />
-      <path d="M26 44c0 6 2 9 6 9s6-3 6-9v-6H26v6Z" fill="#8fdcb0" stroke="#1b7a43" strokeWidth="2" />
-      <circle cx="24" cy="26" r="10" fill="#2fa860" />
-      <circle cx="40" cy="26" r="10" fill="#2fa860" />
-      <circle cx="32" cy="18" r="10" fill="#37b56b" />
-      <circle cx="28" cy="27" r="2.4" fill="#fff" />
-      <circle cx="38" cy="27" r="2.4" fill="#fff" />
-      <circle cx="28.6" cy="27.6" r="1.1" fill="#1c2b23" />
-      <circle cx="38.6" cy="27.6" r="1.1" fill="#1c2b23" />
-      <path d="M30 33q3 3 6 0" stroke="#1c2b23" strokeWidth="1.8" fill="none" strokeLinecap="round" />
-      <circle cx="22" cy="32" r="2.2" fill="#ffd1dc" opacity=".8" />
-      <circle cx="44" cy="32" r="2.2" fill="#ffd1dc" opacity=".8" />
-    </svg>
+    <svg className="broc" width={size} height={size} viewBox="0 0 200 200" role="img" aria-label="Broc, la mascota de Fridgie">
+
+  <ellipse cx="100" cy="190" rx="42" ry="5" fill="#1F5130" opacity="0.12"/>
+
+  <g fill="#1F5130" stroke="#1F5130" strokeWidth="10" strokeLinejoin="round">
+    <rect x="74" y="112" width="52" height="68" rx="22"/>
+    <circle cx="52" cy="92" r="28"/>
+    <circle cx="78" cy="60" r="32"/>
+    <circle cx="122" cy="58" r="34"/>
+    <circle cx="150" cy="90" r="28"/>
+    <circle cx="100" cy="88" r="42"/>
+  </g>
+
+  <rect x="74" y="112" width="52" height="68" rx="22" fill="#B7DB7A"/>
+  <path d="M89 150v13M111 150v13" stroke="#8FBF4F" strokeWidth="4" strokeLinecap="round" fill="none"/>
+
+  <g fill="#3FA34D">
+    <circle cx="52" cy="92" r="28"/>
+    <circle cx="78" cy="60" r="32"/>
+    <circle cx="122" cy="58" r="34"/>
+    <circle cx="150" cy="90" r="28"/>
+    <circle cx="100" cy="88" r="42"/>
+  </g>
+
+  <g fill="#8FD16E" opacity="0.85">
+    <circle cx="66" cy="46" r="7"/>
+    <circle cx="110" cy="40" r="8"/>
+    <circle cx="38" cy="82" r="6"/>
+    <circle cx="150" cy="76" r="6"/>
+  </g>
+
+  <g>
+    <circle cx="82" cy="96" r="12" fill="#FFFFFF" stroke="#1F5130" strokeWidth="3"/>
+    <circle cx="118" cy="96" r="12" fill="#FFFFFF" stroke="#1F5130" strokeWidth="3"/>
+    <circle cx="85" cy="98" r="6.5" fill="#1D2B20"/>
+    <circle cx="121" cy="98" r="6.5" fill="#1D2B20"/>
+    <circle cx="87.5" cy="95.5" r="2.4" fill="#FFFFFF"/>
+    <circle cx="123.5" cy="95.5" r="2.4" fill="#FFFFFF"/>
+  </g>
+
+  <ellipse cx="68" cy="111" rx="7" ry="5" fill="#FF8FA3" opacity="0.75"/>
+  <ellipse cx="132" cy="111" rx="7" ry="5" fill="#FF8FA3" opacity="0.75"/>
+  <path d="M89 113Q100 125 111 113" fill="none" stroke="#1F5130" strokeWidth="4.5" strokeLinecap="round"/>
+</svg>
   );
 }
 
@@ -100,7 +130,7 @@ export function Layout() {
     <div className="app-shell">
       <header className="topbar">
         <div className="topbar-inner">
-          <NavLink to="/" className="brand"><img src="/icons/icon-192.png" alt="" width={34} height={34} /> FRIDGIE</NavLink>
+          <NavLink to="/" className="brand"><img src="/icons/icon-192.png" alt="" width={34} height={34} /> Fridgie</NavLink>
           <nav className="nav" aria-label="Principal">
             {NAV.map((n) => <NavLink key={n.to} to={n.to} className={({ isActive }) => (isActive ? 'active' : '')}>{n.label}</NavLink>)}
           </nav>

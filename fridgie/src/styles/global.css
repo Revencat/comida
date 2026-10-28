@@ -1,22 +1,22 @@
 /* ═══ FRIDGIE — identidad: blanco luminoso, verdes frescos, premium y adorable ═══ */
 :root {
-  --green-700: #1b7a43;
-  --green-500: #2fa860;
-  --green-300: #7fd6a2;
-  --green-100: #e9f8ef;
-  --green-50:  #f4fbf6;
-  --ink:       #1c2b23;
+  --green-700: #1f6b3b;
+  --green-500: #3fa34d;
+  --green-300: #8fd16e;
+  --green-100: #e6f6d8;
+  --green-50:  #f3fae9;
+  --ink:       #1f2e22;
   --ink-soft:  #5b6f63;
   --white:     #ffffff;
-  --paper:     #fbfdfb;
-  --line:      #e2efe6;
+  --paper:     #fff9e6;
+  --line:      #f0e3b8;
   --amber:     #f4b942;
   --red:       #d94f4f;
-  --radius-lg: 22px;
-  --radius-md: 14px;
+  --radius-lg: 28px;
+  --radius-md: 18px;
   --shadow-sm: 0 1px 3px rgba(28, 43, 35, .07);
   --shadow-md: 0 8px 24px rgba(28, 43, 35, .10);
-  --font: 'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+  --font: 'Nunito', ui-rounded, 'SF Pro Rounded', 'Segoe UI', system-ui, sans-serif;
 }
 
 * { box-sizing: border-box; }
@@ -24,7 +24,7 @@ html, body { margin: 0; padding: 0; }
 body {
   font-family: var(--font);
   background:
-    radial-gradient(1200px 500px at 85% -10%, var(--green-100) 0%, transparent 60%),
+    radial-gradient(1200px 500px at 85% -10%, #ffe9a0 0%, transparent 60%),
     var(--paper);
   color: var(--ink);
   -webkit-font-smoothing: antialiased;
@@ -38,7 +38,7 @@ button { font-family: inherit; cursor: pointer; }
 /* Barra superior */
 .topbar {
   position: sticky; top: 0; z-index: 20;
-  background: rgba(255,255,255,.86); backdrop-filter: blur(12px);
+  background: rgba(255,249,230,.88); backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--line);
 }
 .topbar-inner {
@@ -124,7 +124,7 @@ h2 { font-size: 1.25rem; margin: 1.4rem 0 .6rem; }
   .nav { display: none; }
   .tabbar {
     display: flex; position: fixed; inset: auto 0 0 0; z-index: 30;
-    background: rgba(255,255,255,.95); backdrop-filter: blur(12px);
+    background: rgba(255,249,230,.96); backdrop-filter: blur(12px);
     border-top: 1px solid var(--line); justify-content: space-around; padding: .4rem .2rem calc(.4rem + env(safe-area-inset-bottom));
   }
   .tabbar a { color: var(--ink-soft); font-size: .72rem; font-weight: 700; display: flex; flex-direction: column; align-items: center; gap: 2px; }
@@ -181,3 +181,20 @@ h2 { font-size: 1.25rem; margin: 1.4rem 0 .6rem; }
 }
 
 .receipt-done { text-align: center; padding: clamp(2rem, 8vw, 4rem) 1rem; display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+
+/* ═══ Identidad Fridgie: amable, redondeada y táctil ═══ */
+h1, h2 { font-weight: 900; }
+.brand { font-size: 1.45rem; font-weight: 900; letter-spacing: -.01em; }
+.brand img { border-radius: 10px; }
+.nav a { font-weight: 800; }
+.nav a.active { background: var(--green-500); color: #fff; }
+.card { border-width: 2px; box-shadow: 0 4px 0 var(--line); }
+.btn { font-weight: 800; padding: .8rem 1.5rem; }
+.btn-primary { background: var(--green-500); box-shadow: 0 4px 0 var(--green-700); }
+.btn-primary:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--green-700); }
+.btn-secondary { box-shadow: 0 3px 0 #cfe8b8; }
+.pill { font-weight: 800; }
+.tabbar a.active { color: var(--green-700); }
+.broc { flex: none; filter: drop-shadow(0 8px 14px rgba(31,107,59,.22)); transform-origin: 50% 90%; animation: broc-hello 1.1s ease .3s 1 both; }
+@keyframes broc-hello { 0% { transform: rotate(0); } 30% { transform: rotate(-9deg); } 60% { transform: rotate(7deg); } 100% { transform: rotate(0); } }
+@media (prefers-reduced-motion: reduce) { .broc { animation: none; } }

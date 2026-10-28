@@ -1,14 +1,14 @@
 {
-  "name": "FRIDGIE",
-  "short_name": "FRIDGIE",
+  "name": "Fridgie",
+  "short_name": "Fridgie",
   "description": "Organiza tu despensa, descubre recetas y gestiona tu compra desde tus dispositivos favoritos.",
   "id": "/",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "orientation": "any",
-  "background_color": "#ffffff",
-  "theme_color": "#2fa860",
+  "background_color": "#fff9e6",
+  "theme_color": "#3fa34d",
   "lang": "es",
   "categories": ["food", "lifestyle", "productivity"],
   "icons": [

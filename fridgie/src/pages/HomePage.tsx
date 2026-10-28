@@ -19,10 +19,10 @@ export default function HomePage() {
     <>
       <div className="row spread">
         <div>
-          <h1>Hola, soy Broc 🥦</h1>
+          <h1>¡Hola! Soy Broc</h1>
           <p className="subtitle">Tu cocina, siempre a mano. Esto es lo que tienes ahora mismo:</p>
         </div>
-        <Broc size={72} />
+        <Broc size={120} />
       </div>
       <div className="grid cols-3">
         <Card title="Puedes cocinar ya">
